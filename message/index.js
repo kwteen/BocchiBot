@@ -1471,6 +1471,16 @@ module.exports = msgHandler = async (bocchi = new Client(), message) => {
             break
 
             // Weeb zone
+           case 'yaoi':
+                if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
+			    const yam = await fetch(`http://api.fdci.se/rep.php?gambar=yaoi`)
+			    const yaoi = await yam.json()
+                let flyaoi = yaoi[Math.floor(Math.random() * yaoi.length) + 1]
+                await bocchi.sendFileFromUrl(from, flyaoi, '', 'nhaaaa...', id)
+			    .catch(() => {
+                 bocchi.reply(from, 'No image received or server offline, try later.', id)
+            })
+            break 
             case 'neko':
                 if (!isRegistered) return await bocchi.reply(from, ind.notRegistered(), id)
                 await bocchi.reply(from, ind.wait(), id)
